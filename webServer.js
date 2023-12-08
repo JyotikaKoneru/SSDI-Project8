@@ -575,9 +575,9 @@ app.delete("/deletePhoto/:photoId", function (request, response) {
       response.status(401).send();
     } else {
       // User has the authority to delete the photo
-      Photo.deleteOne({ _id: new mongoose.Types.ObjectId(photoId) }, function (err) {
-        if (err) {
-          console.error("Error deleting photo:", err);
+      Photo.deleteOne({ _id: new mongoose.Types.ObjectId(photoId) }, function (err_delete) {
+        if (err_delete) {
+          console.error("Error deleting photo:", err_delete);
           response.status(500).send();
         } else {
           console.log("Photo deleted successfully.");
@@ -604,9 +604,9 @@ app.delete("/deleteComment/:commentId", function (request, response) {
       Photo.updateOne(
         { "comments._id": new mongoose.Types.ObjectId(commentId) },
         { $pull: { comments: { _id: new mongoose.Types.ObjectId(commentId) } } },
-        function (err) {
-          if (err) {
-            console.error("Error deleting comment:", err);
+        function (err_update) {
+          if (err_update) {
+            console.error("Error deleting comment:", err_update);
             response.status(500).send();
           } else {
             console.log("Comment deleted successfully.");
@@ -633,9 +633,9 @@ app.delete("/deleteUser/:userId", function (request, response) {
       response.status(401).send();
     } else {
       // Delete the user's data from the database
-      User.deleteOne({ _id: new mongoose.Types.ObjectId(userId) }, function (err) {
-        if (err) {
-          console.error("Error deleting user account:", err);
+      User.deleteOne({ _id: new mongoose.Types.ObjectId(userId) }, function (err_delete_user) {
+        if (err_delete_user) {
+          console.error("Error deleting user account:", err_delete_user);
           response.status(500).send();
         } else {
           // Provide a final confirmation message to the user
