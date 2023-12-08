@@ -220,8 +220,8 @@ app.post("/user", function (request, response) {
       userId: user._id ,
       description: `User ${user.first_name} added}` 
     })
-      .then((user) => {
-        console.log(`Added User`);
+      .then((user1) => {
+        console.log(`Added User`+user1);
       })
       .catch((err1) => {
         console.error("Error: ", err1);
@@ -282,9 +282,9 @@ app.post("/photos/new", function (request, response) {
     User.find(
       {
         _id: request.session.user_id,
-      }, {__v: 0}, function (err, user) {
-    if (err) {
-      console.error("Error: ", err);
+      }, {__v: 0}, function (err_cur, user) {
+    if (err_cur) {
+      console.error("Error: ", err_cur);
       return;
     }
   
@@ -292,8 +292,8 @@ app.post("/photos/new", function (request, response) {
       userId: user[0]._id ,
       description: `User ${user[0].first_name} added photo ${filename}` 
     })
-      .then((user) => {
-        console.log(`User added photo`);
+      .then((user1) => {
+        console.log(`User added photo`+user1);
       })
       .catch((err1) => {
         console.error("Error: ", err1);
@@ -340,7 +340,7 @@ app.post("/commentsOfPhoto/:photo_id", function (request, response) {
             _id: new mongoose.Types.ObjectId()
           }
         } },
-  function (err, result) {
+  function (err) {
     if (err) {
       // Query returned an error. We pass it back to the browser with an
       // Internal Service Error (500) error code.
@@ -353,9 +353,9 @@ app.post("/commentsOfPhoto/:photo_id", function (request, response) {
     User.find(
       {
         _id: request.session.user_id,
-      }, {__v: 0}, function (err, user) {
-    if (err) {
-      console.error("Error: ", err);
+      }, {__v: 0}, function (err3, user) {
+    if (err3) {
+      console.error("Error: ", err3);
       return;
     }
   
@@ -363,8 +363,8 @@ app.post("/commentsOfPhoto/:photo_id", function (request, response) {
       userId: user[0]._id ,
       description: `User ${user[0].first_name} added comment to photo ${id}` 
     })
-      .then((user) => {
-        console.log(`User added comment`);
+      .then((user6) => {
+        console.log(`User added comment`+user6);
       })
       .catch((err1) => {
         console.error("Error: ", err1);
@@ -409,8 +409,8 @@ app.post("/admin/login", function (request, response) {
       userId: user[0]._id ,
       description: `User ${user[0].first_name} logged in` 
     })
-      .then((user) => {
-        console.log(`User logged in`);
+      .then((user8) => {
+        console.log(`User logged in`+user8);
       })
       .catch((err1) => {
         console.error("Error in /user", err1);
@@ -441,8 +441,8 @@ app.post("/admin/logout", function (request, response) {
     userId: user[0]._id ,
     description: `User ${user[0].first_name} logged out` 
   })
-    .then((user) => {
-      console.log(`User logged out`);
+    .then((user9) => {
+      console.log(`User logged out`+user9);
     })
     .catch((err1) => {
       console.error("Error: ", err1);
@@ -675,9 +675,9 @@ app.delete("/deletePhoto/:photoId", function (request, response) {
       response.status(401).send();
     } else {
       // User has the authority to delete the photo
-      Photo.deleteOne({ _id: new mongoose.Types.ObjectId(photoId) }, function (err) {
-        if (err) {
-          console.error("Error deleting photo:", err);
+      Photo.deleteOne({ _id: new mongoose.Types.ObjectId(photoId) }, function (err5) {
+        if (err5) {
+          console.error("Error deleting photo:", err5);
           response.status(500).send();
         } else {
           console.log("Photo deleted successfully.");
@@ -704,9 +704,9 @@ app.delete("/deleteComment/:commentId", function (request, response) {
       Photo.updateOne(
         { "comments._id": new mongoose.Types.ObjectId(commentId) },
         { $pull: { comments: { _id: new mongoose.Types.ObjectId(commentId) } } },
-        function (err) {
-          if (err) {
-            console.error("Error deleting comment:", err);
+        function (err43) {
+          if (err43) {
+            console.error("Error deleting comment:", err43);
             response.status(500).send();
           } else {
             console.log("Comment deleted successfully.");
@@ -733,9 +733,9 @@ app.delete("/deleteUser/:userId", function (request, response) {
       response.status(401).send();
     } else {
       // Delete the user's data from the database
-      User.deleteOne({ _id: new mongoose.Types.ObjectId(userId) }, function (err) {
-        if (err) {
-          console.error("Error deleting user account:", err);
+      User.deleteOne({ _id: new mongoose.Types.ObjectId(userId) }, function (err34) {
+        if (err34) {
+          console.error("Error deleting user account:", err34);
           response.status(500).send();
         } else {
           // Provide a final confirmation message to the user
