@@ -7,6 +7,7 @@
 - Jyotika Koneru 
 
 ## Developers
+- Sravani Kaligotla
 - Sakshi Uplanchiwar
 - Pgnanasri
 - Jyotika Koneru 
