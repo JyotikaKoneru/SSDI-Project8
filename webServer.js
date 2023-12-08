@@ -52,6 +52,7 @@ app.use(bodyParser.json());
 const User = require("./schema/user.js");
 const Photo = require("./schema/photo.js");
 const SchemaInfo = require("./schema/schemaInfo.js");
+const Activity = require('./schema/activity.js');
 
 // XXX - Your submission should work without this line. Comment out or delete
 // this line for tests and before submission!
@@ -96,7 +97,7 @@ app.get("/", function (request, response) {
 app.get("/test/:p1", function (request, response) {
   // Express parses the ":p1" from the URL and returns it in the request.params
   // objects.
-  console.log("/test called with param1 = ", request.params.p1);
+  // console.log("/test called with param1 = ", request.params.p1);
 
   const param = request.params.p1 || "info";
 
@@ -119,7 +120,7 @@ app.get("/test/:p1", function (request, response) {
       }
 
       // We got the object - return it in JSON format.
-      console.log("SchemaInfo", info[0]);
+      // console.log("SchemaInfo", info[0]);
       response.end(JSON.stringify(info[0]));
     });
   } else if (param === "counts") {
@@ -212,6 +213,22 @@ app.post("/user", function (request, response) {
         .then((user) => {
           request.session.user_id = user._id;
           session.user_id = user._id;
+
+  // activity code
+  
+    Activity.create({
+      userId: user._id ,
+      description: `User ${user.first_name} added}` 
+    })
+      .then((user) => {
+        console.log(`Added User`);
+      })
+      .catch((err1) => {
+        console.error("Error: ", err1);
+        response.status(500).send();
+      });
+
+
           response.end(JSON.stringify(user));
         })
         .catch((err1) => {
@@ -261,7 +278,30 @@ app.post("/photos/new", function (request, response) {
             comment: [],
           })
           .then(() => {
-            response.end();
+    // activity code
+    User.find(
+      {
+        _id: request.session.user_id,
+      }, {__v: 0}, function (err, user) {
+    if (err) {
+      console.error("Error: ", err);
+      return;
+    }
+  
+    Activity.create({
+      userId: user[0]._id ,
+      description: `User ${user[0].first_name} added photo ${filename}` 
+    })
+      .then((user) => {
+        console.log(`User added photo`);
+      })
+      .catch((err1) => {
+        console.error("Error: ", err1);
+        response.status(500).send();
+      });
+  
+  });
+              response.end();
           })
           .catch(err1 => {
             console.error("Error in /photos/new", err1);
@@ -300,7 +340,7 @@ app.post("/commentsOfPhoto/:photo_id", function (request, response) {
             _id: new mongoose.Types.ObjectId()
           }
         } },
-  function (err) {
+  function (err, result) {
     if (err) {
       // Query returned an error. We pass it back to the browser with an
       // Internal Service Error (500) error code.
@@ -308,6 +348,32 @@ app.post("/commentsOfPhoto/:photo_id", function (request, response) {
       response.status(500).send(JSON.stringify(err));
       return;
     }
+
+    // activity code
+    User.find(
+      {
+        _id: request.session.user_id,
+      }, {__v: 0}, function (err, user) {
+    if (err) {
+      console.error("Error: ", err);
+      return;
+    }
+  
+    Activity.create({
+      userId: user[0]._id ,
+      description: `User ${user[0].first_name} added comment to photo ${id}` 
+    })
+      .then((user) => {
+        console.log(`User added comment`);
+      })
+      .catch((err1) => {
+        console.error("Error: ", err1);
+        response.status(500).send();
+      });
+  
+  });
+  
+
     response.end();
   });
 });
@@ -338,6 +404,18 @@ app.post("/admin/login", function (request, response) {
     }
     request.session.user_id = user[0]._id;
     session.user_id = user[0]._id;
+
+    Activity.create({
+      userId: user[0]._id ,
+      description: `User ${user[0].first_name} logged in` 
+    })
+      .then((user) => {
+        console.log(`User logged in`);
+      })
+      .catch((err1) => {
+        console.error("Error in /user", err1);
+        response.status(500).send();
+      });
     //session.user = user;
     //response.cookie('user',user);
     // We got the object - return it in JSON format.
@@ -349,8 +427,30 @@ app.post("/admin/login", function (request, response) {
  * URL /admin/logout - clears user session
  */
 app.post("/admin/logout", function (request, response) {
-  //session.user = undefined;
-  //response.clearCookie('user');
+
+  User.find(
+    {
+      _id: request.session.user_id,
+    }, {__v: 0}, function (err, user) {
+  if (err) {
+    // write your own comments
+    console.error("Error: ", err);
+    return;
+  }
+  Activity.create({
+    userId: user[0]._id ,
+    description: `User ${user[0].first_name} logged out` 
+  })
+    .then((user) => {
+      console.log(`User logged out`);
+    })
+    .catch((err1) => {
+      console.error("Error: ", err1);
+      response.status(500).send();
+    });
+
+});
+
   request.session.destroy(() => {
     session.user_id = undefined;
     response.end();
@@ -575,9 +675,9 @@ app.delete("/deletePhoto/:photoId", function (request, response) {
       response.status(401).send();
     } else {
       // User has the authority to delete the photo
-      Photo.deleteOne({ _id: new mongoose.Types.ObjectId(photoId) }, function (err_delete) {
-        if (err_delete) {
-          console.error("Error deleting photo:", err_delete);
+      Photo.deleteOne({ _id: new mongoose.Types.ObjectId(photoId) }, function (err) {
+        if (err) {
+          console.error("Error deleting photo:", err);
           response.status(500).send();
         } else {
           console.log("Photo deleted successfully.");
@@ -604,9 +704,9 @@ app.delete("/deleteComment/:commentId", function (request, response) {
       Photo.updateOne(
         { "comments._id": new mongoose.Types.ObjectId(commentId) },
         { $pull: { comments: { _id: new mongoose.Types.ObjectId(commentId) } } },
-        function (err_update) {
-          if (err_update) {
-            console.error("Error deleting comment:", err_update);
+        function (err) {
+          if (err) {
+            console.error("Error deleting comment:", err);
             response.status(500).send();
           } else {
             console.log("Comment deleted successfully.");
@@ -633,9 +733,9 @@ app.delete("/deleteUser/:userId", function (request, response) {
       response.status(401).send();
     } else {
       // Delete the user's data from the database
-      User.deleteOne({ _id: new mongoose.Types.ObjectId(userId) }, function (err_delete_user) {
-        if (err_delete_user) {
-          console.error("Error deleting user account:", err_delete_user);
+      User.deleteOne({ _id: new mongoose.Types.ObjectId(userId) }, function (err) {
+        if (err) {
+          console.error("Error deleting user account:", err);
           response.status(500).send();
         } else {
           // Provide a final confirmation message to the user
@@ -643,6 +743,21 @@ app.delete("/deleteUser/:userId", function (request, response) {
 
         }
       });
+    }
+  });
+});
+
+// get acivity list 
+app.get('/activityList', (request, response)=>{
+  Activity.find({}, function (err, activityDetails) {
+    if (err) {
+      console.error("Error:", err);
+      response.status(500).send(JSON.stringify(err));
+    } else if (activityDetails.length === 0) {
+      response.status(400).send("Missing activity list");
+    } else {
+      response.json(activityDetails);
+      response.end();
     }
   });
 });
