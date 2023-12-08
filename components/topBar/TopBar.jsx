@@ -177,13 +177,13 @@ class TopBar extends React.Component {
                   )}
                 />
                 <FormControlLabel
-                  control={
+                  control={(
                     <Checkbox
                       checked={this.state.isPrivate}
                       onChange={this.handlePrivateCheckboxChange}
                       sx={{ marginRight: -0.2 }}
                     />
-                  }
+                  )}
                   label="Owner Only"
                 />
                 <Button
