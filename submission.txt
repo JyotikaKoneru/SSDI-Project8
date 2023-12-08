@@ -1,7 +1,7 @@
 Project 8 - Submission Form
 
 Marketing Video URL (ensure permissions are set to public viewing):
-http://www.youtube.com ---
+http://www.youtube.com
  
 Is it OK if we post your Marketing Video URL on the class discussion forum?
 Yes
@@ -36,10 +36,6 @@ Brief description to see the story in action:
   - Upon confirmation, the user will be logged out, and all account details, including photos and comments created by the user, will be permanently deleted from the database.
   - The deletion process should ensure that associated data, such as activities, visibility settings, mentions, etc., related to the user, is properly handled and
 
-
-*Story number and name: 8 - Sidebar list marks users with new activity
-*Story points: 3
-Brief description to see the story in action:
   
 
 
