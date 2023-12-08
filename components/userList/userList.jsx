@@ -11,6 +11,9 @@ import './userList.css';
 // import fetchModel from "../../lib/fetchModelData";
 import axios from 'axios'; 
 
+// import sidebar component
+import Sidebar from '../sidebar/sidebar';
+
 /**
  * Define UserList, a React component of project #5
  */
@@ -68,8 +71,9 @@ class UserList extends React.Component {
             </List>
           </Link>
         ))}
+        <Sidebar/>
       </div>
-    ) : ( <div />);
+      ) : ( <div />);
   }
 }
 
