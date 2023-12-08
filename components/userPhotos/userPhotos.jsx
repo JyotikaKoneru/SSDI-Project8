@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import './userPhotos.css';
 // import fetchModel from "../../lib/fetchModelData";
-import axios from 'axios'; 
+import axios from 'axios';
 
 /**
  * Define UserPhotos, a React componment of project #5
@@ -144,7 +144,7 @@ handleDeleteComment = (commentId) => {
 handleDeleteUserAccount = () => {
 
     const userId = this.state.userId;
-
+    /* eslint-disable no-alert */
     axios.delete(`/deleteUser/${userId}`)
         .then((response) => {
             const warningMessage = response.data.message;
@@ -154,7 +154,7 @@ handleDeleteUserAccount = () => {
                 // If the user confirms, proceed with account deletion
                 axios.delete(`/deleteUser/${userId}`)
                     .then(() => {
-                
+
                     })
                     .catch((error) => {
                         console.error('Error deleting user account:', error);
