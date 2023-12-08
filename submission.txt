@@ -19,6 +19,23 @@ Is it OK if we post your Marketing Video URL on the class discussion forum?
 Any special instructions for grading (it should be easy for someone to run your
 app from a new machine):
 
+* Story number and name:  5 - Deleting Comments, Photos, and Users
+* Story points:  4
+* Brief description to see the story in action:
+* A user should be able to delete any of the things that he or she owns on the site like their photos, comments or their entire user account. 
+* 
+* Total Story Points: 4
+* 
+* Marketing Video URL (ensure permissions are set to public viewing):
+* http://www.youtube.com ---
+* 
+* Is it OK if we post your Marketing Video URL on the class discussion forum?
+* Yes
+* 
+* Any special instructions for grading (it should be easy for someone to run
+* your app from a new machine):
+* None
+
 ************************************ Example ***********************************
 * As an example: if you did only story 5, your file would look like:
 * 
