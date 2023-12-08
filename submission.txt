@@ -54,6 +54,28 @@ app from a new machine):
 * Any special instructions for grading (it should be easy for someone to run
 * your app from a new machine):
 * None
+
+* Story number and name:  1 - Extend user profile detail with usage
+* 
+* Story points:  3
+* Brief description to see the story in action:
+* When exploring a user's details, the user detail page is enhanced with two vital features: the most recent upload and the photo with the most comments.
+* Users encounter a concise yet informative display, showcasing a small thumbnail of the latest photo alongside its upload date, and another thumbnail depicting
+* the photo with the highest comments count.
+* Clicking on either image seamlessly transitions users to the user photos view, offering an immersive experience by presenting the selected photo along with its * associated comments, ensuring a comprehensive view of the image's details and discussions.
+* 
+* Total Story Points: 3
+* 
+* Marketing Video URL (ensure permissions are set to public viewing):
+* http://www.youtube.com ---
+* 
+* Is it OK if we post your Marketing Video URL on the class discussion forum?
+* Yes
+* 
+* Any special instructions for grading (it should be easy for someone to run
+* your app from a new machine):
+* None
+
 ************************************ Example ***********************************
 * As an example: if you did only story 5, your file would look like:
 * 
