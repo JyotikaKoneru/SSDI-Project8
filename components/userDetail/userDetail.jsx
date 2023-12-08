@@ -45,8 +45,8 @@ handleUserChange(user_id){
 
                 // Fetch the most recently uploaded photo
                 axios.get("/user/recentPhoto/" + user_id)
-                    .then((response) => {
-                        const recentPhoto = response.data;
+                    .then((response_recentPhoto) => {
+                        const recentPhoto = response_recentPhoto.data;
                         this.setState({ recentPhoto });
                     })
                     .catch((error) => {
@@ -55,8 +55,8 @@ handleUserChange(user_id){
 
                 // Fetch the photo with the most comments
                 axios.get("/user/mostCommentedPhoto/" + user_id)
-                    .then((response) => {
-                        const mostCommentedPhoto = response.data;
+                    .then((response_mostCommentPhoto) => {
+                        const mostCommentedPhoto = response_mostCommentPhoto.data;
                         this.setState({ mostCommentedPhoto });
                     })
                     .catch((error) => {
@@ -72,11 +72,6 @@ handleUserChange(user_id){
         this.props.history.push(`/photos/${this.state.userDetails._id}/${photoId}`);
     };
 
-    formatDate = (dateTimeString) => {
-        const date = new Date(dateTimeString);
-        const formattedDate = date.toISOString().replace(/T/, ' ').replace(/\.\d+Z$/, '');
-        return formattedDate;
-    }
 
     render() {
     const { userDetails } = this.state;
@@ -137,12 +132,12 @@ handleUserChange(user_id){
               <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                   <img
                       src={`images/${this.state.recentPhoto.file_name}`}
-                      alt="Recent Photo"
+                      alt="Recent figure"
                       onClick={() => this.navigateToUserPhotos(this.state.recentPhoto._id)}
                       style={{ width: '150px', height: '150px' }}
                   />
                   <div style={{ marginLeft: '10px' }}>
-                      <p>Recent Photo Date: {this.formatDate(this.state.recentPhoto.date_time)}</p>
+                      <p>Recent Photo Date: {this.state.recentPhoto.date_time}</p>
                   </div>
               </div>
 
@@ -151,7 +146,7 @@ handleUserChange(user_id){
               <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
                   <img
                       src={`images/${this.state.mostCommentedPhoto.file_name}`}
-                      alt="Most Commented Photo"
+                      alt="Most Commented Figure"
                       onClick={() => this.navigateToUserPhotos(this.state.mostCommentedPhoto._id)}
                       style={{ width: '150px', height: '150px' }}
                   />
