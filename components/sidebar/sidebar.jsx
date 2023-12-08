@@ -18,10 +18,10 @@ class Sidebar extends React.Component {
         axios.get('/activityList').then((result)=>{
             this.setState({
                 activityList: result.data
-            })
+            });
 
-            console.log(this.state.activityList)
-        }).catch(err=>{console.log(err)});
+            console.log(this.state.activityList);
+        }).catch(err=>{console.log(err);});
     }
     render() {
 
@@ -29,7 +29,8 @@ class Sidebar extends React.Component {
     (
      <div>
        {this.state.activityList.map((activity) => (
-         <ul>
+
+         <ul key={activity.description}>
             <li>{activity.description}</li>
          </ul>
        ))}
