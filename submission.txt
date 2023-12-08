@@ -36,6 +36,15 @@ Brief description to see the story in action:
   - Upon confirmation, the user will be logged out, and all account details, including photos and comments created by the user, will be permanently deleted from the database.
   - The deletion process should ensure that associated data, such as activities, visibility settings, mentions, etc., related to the user, is properly handled and
 
+*Story number and name:  8 - Sidebar list marks users with new activity
+*Story points:  3
+Brief description to see the story in action:
+  - Enrich the user list in the navigation sidebar to showcase the latest activities of each user.
+  - Display diverse user activities, including posting a photo (with a thumbnail), adding a comment, user registration, login, and logout.
+  - Ensure the sidebar dynamically updates to reflect the most recent activities of each user.
+  - Reorganize the sidebar layout to distinctly present the current user, their latest activity, and subsequently, the friends list featuring their recent activities.
+  - Consider incorporating visual elements such as thumbnails to enhance the representation of posted photos in the activity feed.
+
   
 
 
